@@ -1,5 +1,4 @@
 import pytest
-from playwright.sync_api import sync_playwright
 
 
 @pytest.fixture(scope="session")
@@ -15,18 +14,20 @@ def browser_context_args(browser_context_args):
 
 
 @pytest.fixture(scope="session")
-def browser():
+def browser(playwright, browser_type):
     """Create a browser instance for testing"""
-    playwright = sync_playwright().start()
-    # Set headless=False to see the browser
-    browser = playwright.chromium.launch(
-        headless=False,
-        slow_mo=50,  # Add 50ms delay between actions
-        args=["--start-maximized"],  # Start with maximized window
-    )
+    print(f"\nBrowser type selected: {browser_type}")  # Debug print
+    if browser_type.name == "webkit":
+        print("Launching WebKit")
+        browser = playwright.webkit.launch(headless=False)
+    elif browser_type.name == "firefox":
+        print("Launching Firefox")
+        browser = playwright.firefox.launch(headless=False)
+    else:
+        print("Launching Chromium")
+        browser = playwright.chromium.launch(headless=False)
     yield browser
     browser.close()
-    playwright.stop()
 
 
 @pytest.fixture
@@ -35,13 +36,3 @@ def page(browser):
     page = browser.new_page()
     yield page
     page.close()
-
-
-# Fixture to run in non-headless mode
-@pytest.fixture(scope="session")
-def browser_launch_args(browser_launch_args):
-    return {
-        **browser_launch_args,
-        "headless": False,
-        "slow_mo": 100,  # Add a small delay between actions for better visibility
-    }

@@ -25,25 +25,19 @@ This project contains automated tests for the Y Combinator website using Playwri
    cd ycombinator-test-automation
    ```
 
-2. Create and activate a virtual environment:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate
-   ```
-
-3. Install dependencies:
+2. Install dependencies:
    ```
    pip install -r requirements.txt
    ```
 
-4. Install Playwright browsers:
+3. Install Playwright browsers:
    ```
    playwright install chromium webkit
    ```
 
 ### Running Tests
 
-Run tests on all specified browsers (Chromium and WebKit):
+Run tests on all specified browsers (Chromium, WebKit, Firefox):
 ```
 pytest
 ```
@@ -52,7 +46,10 @@ Run tests on a specific browser:
 ```
 pytest --browser chromium
 pytest --browser webkit
+pytest --browser firefox
 ```
+
+**Note**: When running tests with Firefox, Playwright will launch Firefox Nightly instead of regular Firefox. This is expected behavior as Playwright uses Firefox Nightly for better automation capabilities and consistent testing behavior. Likewise, when running tests with WebKit, Playwright will launch Playwright's WebKit browser instead of Safari.
 
 ## Project Structure
 
