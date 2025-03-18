@@ -32,12 +32,12 @@ This project contains automated tests for the Y Combinator website using Playwri
 
 3. Install Playwright browsers:
    ```
-   playwright install chromium webkit
+   playwright install chromium webkit firefox
    ```
 
 ### Running Tests
 
-Run tests on all specified browsers (Chromium, WebKit, Firefox):
+Run tests (defaults to Chromium):
 ```
 pytest
 ```
